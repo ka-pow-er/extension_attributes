@@ -1,0 +1,20 @@
+#!/bin/sh
+#
+# Extension Attribute to read the ms_sso key from the org_name host-file plist,
+#      and if available, report the result
+#
+### ENTER THE DESIRED KEY INSIDE THE QUOTATION MARKS "" ###
+KEY="psso_migrated"
+#
+#
+#
+### DO NOT EDIT BELOW THIS LINE ###
+PLIST=/var/db/.com.org_name.host-info.plist
+KEY_CHECK="defaults read $PLIST $KEY"
+
+if ($KEY_CHECK) > /dev/null 2>&1; then
+	RESULT=$($KEY_CHECK)
+else
+	RESULT="N/A"
+fi
+echo "<result>$RESULT</result>"
