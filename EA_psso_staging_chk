@@ -1,0 +1,8 @@
+#!/bin/sh
+LoggedInUser=$(/bin/ls -l /dev/console | /usr/bin/awk '{ print $3 }')
+DIR="/Users/$LoggedInUser/Library/PSSO_Staging"
+if [ -d "$DIR" ]; then
+	 echo "<result>PSSO READY</result>"
+else
+		echo "<result>NOT PSSO READY</result>"
+fi
