@@ -1,0 +1,14 @@
+#!/bin/bash
+#Determine PSSO status of currentUser
+
+#Get current user logged in to device
+currentUser=$( /usr/sbin/scutil <<< "show State:/Users/ConsoleUser" | /usr/bin/awk -F': ' '/[[:space:]]+Name[[:space:]]:/ { if ( $2 != "loginwindow" ) { print $2 }}' )
+
+#Read local user directory record to see if AltSecurityIdentities attribute has been added by macOS
+pssoe_status=$(dscl . read /Users/$currentUser dsAttrTypeStandard:AltSecurityIdentities | awk -F'SSO:' '/PlatformSSO/ {print $2}')
+
+if [[ -z $pssoe_status ]]; then
+     echo "<result>Not Registered</result>"
+else
+     echo "<result>PSSO-Registered</result>"
+fi
